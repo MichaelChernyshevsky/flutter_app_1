@@ -1,9 +1,6 @@
+import 'package:app_english/services/notification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-
-import '../screen/menu.dart';
-import '../screen/start/login_screen.dart';
-import '../services/firebase/notification.dart';
 
 class UserProvider extends ChangeNotifier {
   UserProvider() {
@@ -11,26 +8,28 @@ class UserProvider extends ChangeNotifier {
   }
   User? user;
   bool isExists = false;
-
   String? userMail;
-
   Future<bool> get isLoggedIn async => user != null;
-
-  Future<Widget> init() async {
+  init() {
     user = FirebaseAuth.instance.currentUser;
     userMail = user?.email;
     if (user != null) {
-      isExists = !isExists;
-      return const Login_screen();
+      isExists = true;
     }
-      return const Menu_screen();
+    FirebaseAuth.instance.authStateChanges().listen((event) {
+      user = user;
+      if (user != null) {
+        isExists = true;
+      } else {
+        isExists = false;
+      }
+      notifyListeners();
+    });
   }
 
-  Future<User?> login(
-    context,
-    String email,
-    String password,
-  ) async {
+// вход
+  Future<User?> login(context,
+      {required String email, required String password}) async {
     try {
       user = (await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: email, password: password))
@@ -56,15 +55,13 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
+// выход
   Future signOut() async {
     await FirebaseAuth.instance.signOut();
   }
 
-  Future registration(
-    context,
-    String email,
-    String password,
-  ) async {
+// регистрация
+  Future registration(context, {required password, required email}) async {
     try {
       user = (await FirebaseAuth.instance
               .createUserWithEmailAndPassword(email: email, password: password))
@@ -86,5 +83,5 @@ class UserProvider extends ChangeNotifier {
       }
     }
   }
-
+//
 }

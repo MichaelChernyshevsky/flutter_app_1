@@ -7,4 +7,5 @@ class AppRoute {
   static const study = '/study';
   static const dictionary = '/dict';
   static const account = '/account';
+  static const card_dicts = '/card_dicts';
 }
