@@ -1,8 +1,6 @@
-import 'package:hive/hive.dart';
-
 // import '../../models/word_model.dart';
 
-// class HiveServise { 
+// class HiveServise {
 //   void _InitWord async {
 //     if (!Hive.isAdapterRegistered(0)){
 //       Hive.registerAdapter(WordAdapter());

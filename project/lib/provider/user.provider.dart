@@ -28,12 +28,14 @@ class UserProvider extends ChangeNotifier {
   }
 
 // вход
+<<<<<<< Updated upstream:app_english/lib/provider/user.provider.dart
   Future<User?> login(context,
       {required String email, required String password}) async {
+=======
+  Future<User?> login(context, {required String email, required String password}) async {
+>>>>>>> Stashed changes:project/lib/provider/user.provider.dart
     try {
-      user = (await FirebaseAuth.instance
-              .signInWithEmailAndPassword(email: email, password: password))
-          .user;
+      user = (await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password)).user;
 
       return user;
     } on FirebaseAuthException catch (e) {
@@ -63,9 +65,7 @@ class UserProvider extends ChangeNotifier {
 // регистрация
   Future registration(context, {required password, required email}) async {
     try {
-      user = (await FirebaseAuth.instance
-              .createUserWithEmailAndPassword(email: email, password: password))
-          .user;
+      user = (await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password)).user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         NotificationService.showSnackBar(
